@@ -1,0 +1,135 @@
+<?php
+
+/**
+ * @file
+ * Provides dynamically generated migration plugins.
+ */
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function import_migration_plugins_alter(&$definitions) {
+  // Set up base path.
+  $path = dirname(__FILE__) . '/data/';
+
+  // Create imports using the node base migration.
+  $bundles = ['article', 'page'];
+  // Load the base migration for nodes.
+  foreach ($bundles as $type) {
+    // Duplicate the node base creating a new migration.
+    $migration = $definitions['import_node_base'];
+    $migration['label'] = 'Import node:' . $type;
+    $migration['id'] = 'import_node_' . $type;
+    // Point source path to local CSV file.
+    $migration['source']['path'] = $path . 'import.node.' . $type . '.csv';
+    $migration['process']['type']['default_value'] = $type;
+    // Add processing for Article field_tags.
+    if ($type == 'article') {
+      $migration['source']['plugin'] = 'article_node';
+      $migration['source']['csvColumns'][2] = 'Image';
+      $migration['process']['field_image'] = 'Image';
+      $migration['source']['csvColumns'][3] = 'Tags';
+      $migration['process']['field_tags'] = [
+        'plugin' => 'migration',
+        'migration' => 'import_term_tags',
+        'source' => 'Tags',
+      ];
+      $dependencies = ['required' => ['import_term_tags']];
+      $migration['migration_dependencies'] = $dependencies;
+    }
+    // Set body fields to full_html.
+    $migration['process']['body/format'] = [
+      'plugin' => 'default_value',
+      'default_value' => 'full_html'
+    ];
+    // Set new source and process modifications.
+    $definitions['import_node_' . $type] = $migration;
+  }
+
+  // Add a 'Tags' term import using the taxonomy_term base migration.
+  $type = 'tags';
+  $migration = $definitions['import_term_base'];
+  $migration['label'] = 'Import term:' . $type;
+  $migration['id'] = 'import_term_' . $type;
+  // Point source path to local CSV file.
+  $migration['source']['path'] = $path . 'import.term.' . $type . '.csv';
+  // Set correct taxonomy term vocabulary id.
+  $migration['process']['vid']['default_value'] = $type;
+  // Save the new migration.
+  $definitions[$migration['id']] = $migration;
+
+  // Add a 'Basic' block import using the block base migration.
+  $type = 'basic';
+  $migration = $definitions['import_block_base'];
+  $migration['label'] = 'Import block:' . $type;
+  $migration['id'] = 'import_block_' . $type;
+  // Point source path to local CSV file.
+  $migration['source']['path'] = $path . 'import.block.' . $type . '.csv';
+  // Add body/value field.
+  $migration['source']['csvColumns'][2] = 'Body';
+  $migration['process']['body/value'] = 'Body';
+  $migration['process']['body/format'] = [
+    'plugin' => 'default_value',
+    'default_value' => 'full_html'
+  ];
+  // Save the new migration.
+  $definitions[$migration['id']] = $migration;
+
+  // Add an Image file migration using the base file migration
+  $type = 'image';
+  $migration = $definitions['import_file_base'];
+  $migration['label'] = 'Import file:' . $type;
+  $migration['id'] = 'import_file_' . $type;
+  // Point source path to local CSV file.
+  $migration['source']['path'] = $path . 'import.file.' . $type . '.csv';
+  $migration['source']['plugin'] = 'image_file';
+  // Save the new migration.
+  $definitions[$migration['id']] = $migration;
+
+  // Add a 'User' user import using the user base migration.
+  $type = 'user';
+  $migration = $definitions['import_user_base'];
+  $migration['label'] = 'Import user:' . $type;
+  $migration['id'] = 'import_user_' . $type;
+  // Point source path to local CSV file.
+  $migration['source']['path'] = $path . 'import.user.' . $type . '.csv';
+  // Set user picture.
+  $migration['process']['user_picture'] = [
+    'plugin' => 'migration',
+    'migration' => 'import_file_image',
+    'source' => 'Picture',
+  ];
+  // Set a default access/login date to ~1-4 weeks ago.
+  $time = strtotime("-" . rand(1, 4) . "week");
+  $migration['process']['access'] = [
+    'plugin' => 'default_value',
+    'default_value' => $time,
+  ];
+  $migration['process']['login'] = [
+    'plugin' => 'default_value',
+    'default_value' => $time,
+  ];
+  // Set up proper dependencies for image files.
+  $dependencies = ['import_file_image'];
+  $migration['migration_dependencies'] = ['required' => $dependencies];
+  // Save the new migration.
+  $definitions[$migration['id']] = $migration;
+
+  // Add a 'Default comment' comment import using the comment base migration.
+  $type = 'comment';
+  $migration = $definitions['import_comment_base'];
+  $migration['label'] = 'Import comment:' . $type;
+  $migration['id'] = 'import_comment_' . $type;
+  // Point source path to local CSV file.
+  $migration['source']['path'] = $path . 'import.comment.' . $type . '.csv';
+  $migration['source']['plugin'] = 'node_comment';
+  $migration['process']['entity_id'] = [
+    'plugin' => 'migration',
+    'migration' => 'import_node_article',
+    'source' => 'Content',
+  ];
+  // Set up proper dependencies for comments.
+  $dependencies = ['import_node_article'];
+  $migration['migration_dependencies'] = ['required' => $dependencies];
+  $definitions[$migration['id']] = $migration;
+}

@@ -1,0 +1,179 @@
+/**
+ * Place your custom styles here.
+ */
+h1{
+	font-size: 30px;
+}
+
+a:hover{
+	text-decoration: none;
+}
+.main-container .js-quickedit-page-title{
+	margin:0 auto;
+	padding: 30px;
+}
+
+.col-sm-6{
+	height: 360px;
+}
+
+#block-boot-subtheme-search{
+	margin-top: 30px;
+}
+
+.navbar{
+	margin-bottom: 0px;
+}
+
+
+.block-title{
+    background: -webkit-linear-gradient( left,#1e7aef,#95ea96);
+    background: -moz-linear-gradient( left,#1e7aef,#95ea96);
+    background: -o-linear-gradient( left,#1e7aef,#95ea96);
+    background: -ms-linear-gradient( left,#1e7aef,#95ea96);
+    filter: 
+    progid:DXImageTransform.Microsoft.Gradient(startColorStr='#1e7aef',endColorStr='#95ea96',gradientType='1');
+    padding: 10px;
+    margin-top: 30px;
+	margin-bottom: 0px;
+    color: white;
+    font-size: 20px;
+
+}
+
+
+
+.view-block-template .table{
+	border:5px solid rgb(159, 219, 226);
+}
+
+.content{
+	padding:30px;
+}
+
+body{
+	margin-top: 0px;
+}
+
+.container>.navbar-header{
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+.container .row{
+	margin: 0;
+}
+
+.navbar_bg{
+	background: #189eec;
+}
+
+.region-middlebar-second .form-group:hover,.region-bottombar-first .form-group:hover,.region-bottombar-second .form-group:hover,.region-bottombar-third .form-group:hover{
+	-webkit-box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+	-moz-box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+}
+
+.region-header a{
+	color: white;
+	transiton:all 1s;
+	-moz-transition:all 1s;
+	-webkit-transition: all 1s;
+	-o-trasntion:all 1s;
+	-ms-transition:all 1s;
+}
+
+.region-header a:hover{
+	color: white;
+	font-weight: bold;
+	background: #189eec;
+}
+
+.nav>li>a:focus, .nav>li>a:hover,.nav .is-active{
+	color: #189eec;    
+	background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.region-middlebar-first{
+	margin-top: 30px;
+}
+
+.region-middlebar-second{
+	height: 360px;
+}
+
+.region-content{
+	z-index: -1;
+}
+
+.view-empty{
+	z-index: -1;
+}
+
+.region .view-content{
+	font-size: 12px;
+}
+
+.region .more-link{
+	position: absolute;
+    right: 25px;
+    top: 43px;
+    font-size: 15px;
+    transiton:all 1s;
+	-moz-transition:all 1s;
+	-webkit-transition: all 1s;
+	-o-trasntion:all 1s;
+}
+
+.region .more-link a{
+	color:white;
+}
+
+.region .more-link a:hover{
+	text-decoration: none;
+}
+
+.breadcrumb{
+	margin-top: 30px;
+	background: #fff;
+	border-bottom: 2px solid #ccc;
+}
+
+.main-container .js-quickedit-page-title{
+	padding: 15px;
+    text-align: center;
+    font-size: 26px;
+}
+
+.author{
+	border-top: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.footer{
+	text-align: center;
+	width:1140px;
+    background: #464748;
+    font-size: 18px;
+    color: white; 
+    margin-top: 0px;
+}
+
+tr:hover{
+	background-color: #f9f2de;
+}
+
+.row{
+	background-color: #FAF7EF;
+/*	background: url(../../../sites/default/files/default_images/bg.png) no-repeat;
+    background-size: 100%;    
+    background-attachment: fixed;
+    background-position-y: 75px;*/
+}
+
+.reposition{
+	position: absolute;
+	top: 50%;
+}

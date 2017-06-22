@@ -1,0 +1,16 @@
+name: 'Font Awesome'
+description: 'Iconic font designed for use with Twitter Bootstrap.'
+# core: 8.x
+php: '5'
+dependencies:
+  - 'libraries'
+# version: 7.x-2.5
+# project: fontawesome
+# datestamp: '1445924954'
+type: module
+
+# Information added by Drupal.org packaging script on 2015-11-20
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'fontawesome'
+datestamp: 1448010857
